@@ -1,0 +1,12 @@
+<ng-container *ngIf="usersList">
+
+    <div class="users-list">
+        <h4>USERS:</h4>
+        <br>
+        <div class="scrollable-list">
+            <div *ngFor="let user of usersList" class="user">
+                {{user}}
+            </div>
+        </div>
+    </div>
+</ng-container>

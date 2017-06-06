@@ -1,0 +1,49 @@
+<div class="chat-page">
+
+    <div class="menu-component users-list" *ngIf="usersList">
+        <users-list [usersList]="usersList"></users-list>
+    </div>
+    <div class="menu-component">
+        <div id="chatBox" class="chat-box well" *ngIf="conversation">
+
+            <div *ngFor="let msg of conversation" class="conversation-row">
+
+                <span class="avatar" *ngIf="msg.sender!==user">{{msg.sender}}</span>
+
+                <span class="bubble"
+                      [class.bubble-alt]="msg.sender == user"
+                      [class.me]="msg.sender == user"
+                      [class.you]="msg.sender != user"
+                      [class.typing]="msg.status == 'typing'"
+                >
+                <div class="talktext">
+                    <div class="message-text">{{msg.message}}</div>
+                    <em *ngIf="msg.status != 'typing'" class="timeStamp" data-toggle="tooltip"
+                        title="{{msg.timeStamp}}"
+                    >{{msg.timeStamp}}</em>
+                </div>
+            </span>
+            </div>
+        </div>
+
+    </div>
+
+    <form (ngSubmit)="onSubmit()" novalidate class="chat-input-form">
+        <label for="chatInput" style="display: none">Input: </label>
+        <input id="chatInput" class="form-control" type="text" value={{userMessage}} placeholder="Type a message here"
+               [(ngModel)]="userMessage"
+               [ngModelOptions]="{standalone: true}"
+               (keyup)="onKey($event)"
+               autofocus>
+        <button class="btn btn-info btn-sm">SEND</button>
+    </form>
+
+    <span class="typing-checkbox"><label>
+        <input type="checkbox"
+               [checked]="showUserTyping"
+               (change)="showUserTyping = !showUserTyping">
+        Show message typing</label>
+    </span>
+</div>
+
+
